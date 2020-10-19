@@ -5,10 +5,11 @@
                   targetNamespace="http://www.ibm.com/xmlns/prod/commerce/member">
   <wsdl:types>
     <xsd:schema elementFormDefault="qualified" targetNamespace="http://www.openapplications.org/oagis/9">
-      <xsd:include schemaLocation="http://schema.infor.com/Trunk/InforOAGIS/BODs/Developer/ConfirmBOD.xsd"/>      
+      <xsd:include schemaLocation="../xsd/OAGIS/9.0/BODs/Developer/ConfirmBOD.xsd"/>
     </xsd:schema>
     <xsd:schema elementFormDefault="qualified" targetNamespace="http://www.ibm.com/xmlns/prod/commerce/member">
-      <xsd:include schemaLocation="http://schema.infor.com/Trunk/InforOAGIS/BODs/Developer/SyncPerson.xsd"/>
+      <xsd:include schemaLocation="../xsd/OAGIS/9.0/Overlays/IBM/Commerce/BODs/SyncPerson.xsd"/>
+      <xsd:include schemaLocation="../xsd/OAGIS/9.0/Overlays/IBM/Commerce/BODs/SyncOrganization.xsd"/>
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="ConfirmBOD">
@@ -17,10 +18,17 @@
   <wsdl:message name="SyncPerson">
     <wsdl:part element="member:SyncPerson" name="SyncPerson"></wsdl:part>
   </wsdl:message>
+  <wsdl:message name="SyncOrganization">
+    <wsdl:part element="member:SyncOrganization" name="SyncOrganization"></wsdl:part>
+  </wsdl:message>
   <wsdl:portType name="MemberServicesPortType">
     <wsdl:operation name="SyncPerson">
       <wsdl:input message="member:SyncPerson" name="SyncPerson"></wsdl:input>
       <wsdl:output message="member:ConfirmBOD" name="PersonConfirmBOD"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SyncOrganization">
+      <wsdl:input message="member:SyncOrganization" name="SyncOrganization"></wsdl:input>
+      <wsdl:output message="member:ConfirmBOD" name="OrganizationConfirmBOD"></wsdl:output>
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="MemberServices" type="member:MemberServicesPortType">
@@ -32,6 +40,16 @@
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="PersonConfirmBOD">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SyncOrganization">
+      <soap:operation
+          soapAction="http://www.ibm.com/xmlns/prod/WebSphereCommerce/WebSphereCommerce-MemberServices.wsdl"/>
+      <wsdl:input name="SyncOrganization">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="OrganizationConfirmBOD">
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
